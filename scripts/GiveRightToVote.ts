@@ -28,7 +28,7 @@ async function main() {
 
   let ballotContract: Ballot;
   const ballotContractFactory = new Ballot__factory(signer);
-  ballotContract = await ballotContractFactory.attach(contractAddress);
+  ballotContract = ballotContractFactory.attach(contractAddress);
 
   const tx = await ballotContract.giveRightToVote(targetAddress);
   const receipt = await tx.wait();
