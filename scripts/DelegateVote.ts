@@ -3,8 +3,8 @@ import { Ballot, Ballot__factory } from "../typechain-types";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const CONTACT_ADDRESS = "0x7803c3F6d8560e669f3cf0aB241AAcB1fe9EA1DC";
-const DELEGATE_ADDRESS = "";
+const CONTRACT_ADDRESS = "0xb6430f17128E52c6b6Fe4Af4d5F622188CFEA01c";
+const DELEGATE_ADDRESS = "0x162Bd1aBF0FaDdEee640fAd2c3a3dA6F015a6a3e";
 
 async function main() {
   const providerOptions = {
@@ -26,12 +26,14 @@ async function main() {
 
   let ballotContract: Ballot;
   const ballotContractFactory = new Ballot__factory(signer);
-  ballotContract = ballotContractFactory.attach(CONTACT_ADDRESS);
+  ballotContract = ballotContractFactory.attach(CONTRACT_ADDRESS);
 
   console.log("delegating vote");
-  const delegateVoteTx = await ballotContract.delegate(DELEGATE_ADDRESS);
+  const delegateVoteTx = await ballotContract.delegate(DELEGATE_ADDRESS, {
+    gasLimit: 210000,
+  });
   const delegateVoteReceipt = await delegateVoteTx.wait();
-  console.log(`Transaction receipt: ${delegateVoteReceipt}`);
+  console.log(`Your vote has been delegated: ${delegateVoteReceipt}`);
 }
 
 main().catch((error) => {

@@ -32,7 +32,7 @@ async function main() {
 
   const tx = await ballotContract.giveRightToVote(targetAddress);
   const receipt = await tx.wait();
-  console.log(`Transaction receipt: ${receipt}`);
+  console.log(`Transaction receipt: ${receipt.transactionHash}`);
 }
 
 main().catch((error) => {
