@@ -3,6 +3,9 @@ import { Ballot, Ballot__factory } from "../typechain-types";
 import * as dotenv from "dotenv";
 dotenv.config();
 
+const CONTACT_ADDRESS = "0x7803c3F6d8560e669f3cf0aB241AAcB1fe9EA1DC";
+const DELEGATE_ADDRESS = "";
+
 async function main() {
   const providerOptions = {
     alchemy: process.env.ALCHEMY_API_KEY,
@@ -21,18 +24,14 @@ async function main() {
     } with balance ${balanceBN.toString()} \n This account has a balance of  ${balanceBN.toString()} Wei`
   );
 
-  const args = process.argv;
-  const params = args.slice(2);
-  const contractAddress = params[0];
-  const targetAddress = params[1];
-
   let ballotContract: Ballot;
   const ballotContractFactory = new Ballot__factory(signer);
-  ballotContract = await ballotContractFactory.attach(contractAddress);
+  ballotContract = ballotContractFactory.attach(CONTACT_ADDRESS);
 
-  const tx = await ballotContract.giveRightToVote(targetAddress);
-  const receipt = await tx.wait();
-  console.log(`Transaction receipt: ${receipt}`);
+  console.log("delegating vote");
+  const delegateVoteTx = await ballotContract.delegate(DELEGATE_ADDRESS);
+  const delegateVoteReceipt = await delegateVoteTx.wait();
+  console.log(`Transaction receipt: ${delegateVoteReceipt}`);
 }
 
 main().catch((error) => {
