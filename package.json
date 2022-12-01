@@ -25,6 +25,9 @@
     "typescript": ">=4.5.0"
   },
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "random": "^4.1.0",
+    "random-words": "^1.2.0",
+    "words": "^0.1.4"
   }
 }
